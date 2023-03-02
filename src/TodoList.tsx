@@ -3,7 +3,7 @@ import {TaskType} from './App'
 
 type TodoListPropsType = {
     title: string
-    tasks: Array<TaskType>
+    tasks: TaskType[]
 }
 
 const TodoList: FC<TodoListPropsType> = (props) => {
