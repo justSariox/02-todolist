@@ -1,3 +1,4 @@
+
 .App {
   padding: 30px;
   display: flex;
@@ -6,15 +7,20 @@
 .App > div {
   margin-right: 50px;
 }
-.todolist {
-  border: 2px solid hotpink;
-  border-radius: 5px;
-  padding: 20px;
-  background-color: darkseagreen;
+
+.error {
+  border: red 1px solid;
 }
-.todolist-empty {
-  border: 2px solid hotpink;
-  border-radius: 5px;
-  padding: 20px;
-  background-color: darksalmon;
+
+.error-message {
+  color: red;
 }
+
+.active-filter {
+  background-color: aquamarine;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+
