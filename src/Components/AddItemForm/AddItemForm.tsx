@@ -1,9 +1,11 @@
 import React, {ChangeEvent, FC, useState, KeyboardEvent} from 'react';
+import { IconButton, TextField} from "@mui/material";
+import { AddBox} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
-
+const ButtonStyle = {maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', marginLeft: '10px'}
 export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
@@ -32,13 +34,21 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
     return (
         <div>
             <div>
-                <input value={title}
-                       onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}
-                       className={error ? "error" : ""}
+                <TextField
+                    value={title}
+                    onChange={onChangeHandler}
+                    onKeyPress={onKeyPressHandler}
+                    error={!!error}
+                    label={'Title'}
+                    helperText={error}
                 />
-                <button onClick={addItem}>+</button>
-                {error && <div className="error-message">{error}</div>}
+                <IconButton
+                    onClick={addItem}
+                    color='primary'
+                >
+                    <AddBox />
+                </IconButton>
+                {/*{error && <div className="error-message">{error}</div>}*/}
             </div>
         </div>
     );
