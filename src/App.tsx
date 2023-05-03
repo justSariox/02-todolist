@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Components/Todolist/Todolist';
 import {AddItemForm} from "./Components/AddItemForm/AddItemForm";
@@ -52,48 +52,51 @@ function App() {
     //     ]
     // });
 
-    const updateTask = (taskId: string, todolistId: string, updatedTitle: string) => {
+    const updateTask = useCallback((taskId: string, todolistId: string, updatedTitle: string) => {
         const action = ChangeTaskTitleAC(todolistId, taskId, updatedTitle)
         dispatch(action)
-    }
+    }, [])
 
-    const updateTodoList = (todolistId: string, updatedTitle: string) => {
+    const updateTodoList = useCallback((todolistId: string, updatedTitle: string) => {
         const action = ChangeTodoListTitleAC(todolistId, updatedTitle)
         dispatch(action)
-    }
+    }, [])
 
-    const AddNewTodoList = (title: string) => {
-        const action = AddTodoListAC(title)
-        dispatch(action)
-    }
+    // const AddNewTodoList = (title: string) => {
+    //     const action = AddTodoListAC(title)
+    //     dispatch(action)
+    // }
+    const AddNewTodoList = useCallback((title: string) => {
+            const action = AddTodoListAC(title)
+            dispatch(action)
+        }, [])
 
-
-    const removeTask = (id: string, todolistId: string) => {
+    const removeTask = useCallback((id: string, todolistId: string) => {
         const action = RemoveTaskAC(id, todolistId)
         dispatch(action)
 
-    }
+    }, [])
 
 
-    const addTask = (title: string, todolistId: string) => {
+    const addTask = useCallback((title: string, todolistId: string) => {
         const action = AddTaskAC(todolistId, title)
         dispatch(action)
-    }
+    }, [])
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    const changeStatus = useCallback((id: string, isDone: boolean, todolistId: string) => {
         const action = ChangeTaskStatusAC(todolistId, id, isDone)
         dispatch(action)
-    }
+    }, [])
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
+    const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
         const action = ChangeTodoListFilterAC(todolistId, value)
         dispatch(action)
-    }
+    }, [])
 
-    function removeTodolist(id: string) {
+    const removeTodolist = useCallback((id: string) => {
         const action = RemoveTodoListAC(id)
         dispatch(action)
-    }
+    }, [])
 
     return (
         <div className="App">
@@ -114,25 +117,14 @@ function App() {
                 </Grid>
                 <Grid container spacing={3}>
                     {
-                        todolists.map(tl => {
-                            let allTodolistTasks = tasks[tl.id];
-                            let tasksForTodolist = allTodolistTasks;
-
-                            if (tl.filter === "active") {
-                                tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
-                            }
-                            if (tl.filter === "completed") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
-                            }
-
-                            return <Grid item>
+                        todolists.map(tl => <Grid item>
                                 <Paper style={{padding: '10px'}}>
 
                                     <Todolist
                                         key={tl.id}
                                         id={tl.id}
                                         title={tl.title}
-                                        tasks={tasksForTodolist}
+                                        tasks={tasks[tl.id]}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
@@ -144,7 +136,7 @@ function App() {
                                     />
                                 </Paper>
                             </Grid>
-                        })
+                        )
                     }
                 </Grid>
             </Container>

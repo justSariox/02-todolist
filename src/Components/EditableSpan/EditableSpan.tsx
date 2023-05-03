@@ -7,6 +7,7 @@ type EditableSpanPropsType = {
 }
 
 export const EditableSpan: FC<EditableSpanPropsType> = (props) => {
+    console.log('EditableSpan called')
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState(props.title)
     const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +26,6 @@ export const EditableSpan: FC<EditableSpanPropsType> = (props) => {
         }
     }
     const addItem = () => {
-        debugger
         props.callBack(title)
     }
 

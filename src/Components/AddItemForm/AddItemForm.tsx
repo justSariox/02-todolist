@@ -6,7 +6,11 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 const ButtonStyle = {maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', marginLeft: '10px'}
-export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
+
+
+export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
+    console.log('AddItemForm called')
+
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -25,7 +29,9 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) {
+            setError(null)
+        }
         if (e.key === 'Enter') {
             addItem();
         }
@@ -52,5 +58,4 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
             </div>
         </div>
     );
-};
-
+})
