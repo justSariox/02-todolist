@@ -5,7 +5,6 @@ import { AddBox} from "@mui/icons-material";
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
-const ButtonStyle = {maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', marginLeft: '10px'}
 
 
 export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
