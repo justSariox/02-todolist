@@ -14,21 +14,21 @@ export type TaskPropsType = {
 
 export const Task: FC<TaskPropsType> = memo(({task, todolistId}) => {
     console.log('task render')
-    const {taskId, title, isDone} = task
+    const {id, title, isDone} = task
     const dispatch = useDispatch()
 
-    const onClickHandler = useCallback(() => dispatch(RemoveTaskAC(taskId, todolistId)), [dispatch, taskId, todolistId])
+    const onClickHandler = useCallback(() => dispatch(RemoveTaskAC(id, todolistId)), [dispatch, id, todolistId])
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        dispatch(ChangeTaskStatusAC(taskId, newIsDoneValue, todolistId))
-    }, [dispatch, taskId, todolistId])
+        dispatch(ChangeTaskStatusAC(id, newIsDoneValue, todolistId))
+    }, [dispatch, id, todolistId])
     const onTitleChangeHandler = useCallback((newValue: string) => {
 
-        dispatch(ChangeTaskTitleAC(taskId, newValue, todolistId))
-    }, [dispatch, taskId, todolistId])
+        dispatch(ChangeTaskTitleAC(id, newValue, todolistId))
+    }, [dispatch, id, todolistId])
 
     return (
-        <div key={taskId} className={isDone ? "is-done" : ""}>
+        <div key={id} className={isDone ? "is-done" : ""}>
             <Checkbox
                 checked={isDone}
                 color="primary"

@@ -16,7 +16,7 @@ import {ButtonMemo} from "../ButtonMemo/ButtonMemo";
 
 
 export type TaskType = {
-    taskId: string
+    id: string
     title: string
     isDone: boolean
 }
@@ -76,7 +76,7 @@ export const Todolist = memo(({todolist}: PropsType) => {
         <div>
             {
                 tasks.map(t => {
-                    return <Task key={t.taskId} task={t} todolistId={id}/>
+                    return <Task key={t.id} task={t} todolistId={id}/>
                 })
             }
         </div>
