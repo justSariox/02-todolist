@@ -20,11 +20,11 @@ type TaskType = {
     addedDate: string
 }
 
-export type ResponseType<D> = {
+export type ResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
-    data: D
+    data: T
 }
 
 const instance = axios.create({
@@ -37,45 +37,37 @@ const instance = axios.create({
 
 export const todolistAPI = {
     updateTodolist(todolistId: string, title: string) {
-        const promise = instance.put<ResponseType<{ item: string }>>(`todo-lists/${todolistId}`, {
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {
                 title: title
             }
         )
-        return promise
     },
     getTodolist() {
-        const promise = instance.get<Array<TodolistType>>(`todo-lists`)
-        return promise
+        return instance.get<Array<TodolistType>>(`todo-lists`)
     },
     createTodolist(title: string) {
-        const promise = instance.post<ResponseType<{ item: TodolistType }>>(`todo-lists`, {
+        return instance.post<ResponseType<{ item: TodolistType }>>(`todo-lists`, {
                 title
             }
         )
-        return promise
     },
     deleteTodolist(todolistId: string) {
-        const promise = instance.delete<ResponseType<{ item: string }>>(`todo-lists/${todolistId}`
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`
         )
-        return promise
     },
 }
 
 export const taskAPI = {
     getTasks(todolistId: string) {
-        const promise = instance.get<Array<TaskType>>(`todo-lists/${todolistId}/tasks`)
-        return promise
+        return instance.get<Array<TaskType>>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
-        const promise = instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
-        return promise
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     deleteTask(todolistId: string, taskId: string) {
-        const promise = instance.delete<ResponseType<{ item: string }>>(`todo-lists/${todolistId}/tasks/${taskId}`)
-        return promise
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, title: string) {
-        const promise = instance.put<ResponseType<{ item: string }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
-        return promise
+        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
     }
 }
