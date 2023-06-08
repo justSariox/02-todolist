@@ -78,7 +78,7 @@ export const Todolist: FC<PropsType> = React.memo((props) => {
         <div style={{paddingTop: '10px'}}>
             <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
                     onClick={onAllClickHandler}
-                    color={'inherit'}
+                    color={'primary'}
             >All
             </Button>
             <Button variant={props.filter === 'active' ? 'outlined' : 'text'}
@@ -87,7 +87,7 @@ export const Todolist: FC<PropsType> = React.memo((props) => {
             </Button>
             <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
                     onClick={onCompletedClickHandler}
-                    color={'secondary'}>Completed
+                    color={'primary'}>Completed
             </Button>
         </div>
     </div>
