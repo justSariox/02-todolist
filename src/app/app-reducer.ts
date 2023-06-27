@@ -1,7 +1,8 @@
 import {Dispatch} from 'redux'
 import {authActions} from '../features/Login/auth-reducer'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI} from "../common/api";
+import {authAPI} from "../features/Login/auth-api";
+
 
 
 const initialState: InitialStateType = {

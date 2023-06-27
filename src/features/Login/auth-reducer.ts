@@ -3,20 +3,18 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {appActions} from "../../app/app-reducer";
 import {clearTasksAndTodos} from "../../common/actions/";
 import {handleServerAppError, handleServerNetworkError} from "../../common/utils";
-import {authAPI} from "../../common/api";
-import {LoginParamsType} from "../../common/api/auth-api";
+import {authAPI, LoginParamsType} from "./auth-api";
 
 const initialState = {
     isLoggedIn: false
 }
 
 
-
 const slice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
-        setIsLoggedInAC: ((state, action: PayloadAction<{isLoggedIn: boolean}>) => {
+        setIsLoggedInAC: ((state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
             state.isLoggedIn = action.payload.isLoggedIn
         })
     },

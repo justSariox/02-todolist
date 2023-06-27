@@ -1,4 +1,4 @@
-import {TaskPriorities, TaskStatuses} from 'common/enums';
+import {TaskPriorities, TaskStatuses} from '../../common/enums';
 import {tasksActions, tasksReducer, TasksStateType, tasksThunks} from './tasks-reducer'
 
 
