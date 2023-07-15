@@ -4,10 +4,10 @@ import { TodolistsList } from '../features/TodolistsList/TodolistsList'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from './store'
-import { initializeAppTC, RequestStatusType } from './app-reducer'
+import {RequestStatusType } from './app-reducer'
 import {  Route, Routes } from 'react-router-dom'
 import { Login } from '../features/Login/Login'
-import { logoutTC } from '../features/Login/auth-reducer'
+import { authThunks } from '../features/Login/auth-reducer'
 import {
 	AppBar,
 	Button,
@@ -32,11 +32,11 @@ function App({demo = false}: PropsType) {
 	const dispatch = useDispatch<any>()
 
 	useEffect(() => {
-		dispatch(initializeAppTC())
+		dispatch(authThunks.initializeAppTC())
 	}, [])
 
 	const logoutHandler = useCallback(() => {
-		dispatch(logoutTC())
+		dispatch(authThunks.logoutTC())
 	}, [])
 
 	if (!isInitialized) {
