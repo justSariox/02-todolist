@@ -1,19 +1,19 @@
 import {instance} from "../../common/api/common.api";
-import {ResponseType} from "../../common/types";
+import {TResponse} from "../../common/types";
 
 export const todolistsAPI = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists');
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title});
+        return instance.post<TResponse<{ item: TodolistType }>>('todo-lists', {title: title});
 
     },
     deleteTodolist(id: string) {
-        return instance.delete<ResponseType>(`todo-lists/${id}`);
+        return instance.delete<TResponse>(`todo-lists/${id}`);
     },
     updateTodolist(arg: UpdateTodolistTitleArgType) {
-        return instance.put<ResponseType>(`todo-lists/${arg.todolistId}`, {title: arg.title});
+        return instance.put<TResponse>(`todo-lists/${arg.todolistId}`, {title: arg.title});
 
     },
 

@@ -25,7 +25,7 @@ type PropsType = {
 	demo?: boolean
 }
 
-function App({demo = false}: PropsType) {
+const App = ({demo = false}: PropsType) => {
 	const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 	const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
 	const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -56,9 +56,9 @@ function App({demo = false}: PropsType) {
 							<Menu/>
 						</IconButton>
 						<Typography variant="h6">
-							News
+							TODOLIST APP
 						</Typography>
-						{isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+						 {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
 					</Toolbar>
 					{status === 'loading' && <LinearProgress/>}
 				</AppBar>

@@ -5,22 +5,19 @@ import {appActions} from "../../app/app-reducer";
 import {clearTasksAndTodos} from "../../common/actions/";
 import {handleServerAppError, handleServerNetworkError} from "../../common/utils";
 import {authAPI, LoginParamsType} from "./auth-api";
-import { ResultCode } from '../../common/enums';
+import {ResultCode} from '../../common/enums';
 
 const initialState = {
     isLoggedIn: false,
-    isInitialize: false
+    isInitialize: false,
+    captchaPic: ''
 }
 
 
 const slice = createSlice({
     name: 'auth',
     initialState: initialState,
-    reducers: {
-        // setIsLoggedInAC: ((state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-        //     state.isLoggedIn = action.payload.isLoggedIn
-        // })
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(loginTC.fulfilled, (state, action) => {
@@ -32,6 +29,7 @@ const slice = createSlice({
             .addCase(initializeAppTC.fulfilled, (state, action) => {
                 state.isLoggedIn = action.payload.isLoggedIn
             })
+
 
     }
 })
@@ -50,8 +48,9 @@ const loginTC = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>
                 dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
                 return {isLoggedIn: true}
             } else {
-                handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                const isShowAppError = !res.data.fieldsErrors.length
+                handleServerAppError(res.data, dispatch, isShowAppError)
+                return rejectWithValue(res.data)
             }
         } catch (e) {
             handleServerNetworkError(e, dispatch)
@@ -83,15 +82,13 @@ const logoutTC = createAppAsyncThunk<{ isLoggedIn: boolean }, void>
 const initializeAppTC = createAppAsyncThunk<{ isLoggedIn: boolean }>(
     'auth/initializeApp',
     async (_, thunkAPI) => {
-        const { dispatch, rejectWithValue } = thunkAPI;
+        const {dispatch, rejectWithValue} = thunkAPI;
         try {
+            dispatch(appActions.setAppStatusAC({status: 'loading'}))
             const res = await authAPI.me();
             if (res.data.resultCode === ResultCode.Success) {
-                return { isLoggedIn: true };
+                return {isLoggedIn: true};
             } else {
-                // ❗ Нужна ли здесь обработки ошибки ?
-                // Нет. Т.к. пользователь при первом обращении к приложению
-                // будет видеть ошибку, что не логично
                 handleServerAppError(res.data, dispatch);
                 return rejectWithValue(null);
             }
@@ -99,9 +96,7 @@ const initializeAppTC = createAppAsyncThunk<{ isLoggedIn: boolean }>(
             handleServerNetworkError(e, dispatch);
             return rejectWithValue(null);
         } finally {
-            //❗Нам не важно как прошел запрос, в любом случе мы должны сказать,
-            // что приложение проинициализировано
-            dispatch(appActions.setAppInitializedAC({ isInitialized: true }));
+            dispatch(appActions.setAppInitializedAC({isInitialized: true}));
         }
     }
 );
