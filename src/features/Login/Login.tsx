@@ -99,7 +99,6 @@ export const Login = () => {
                                 checked={formik.values.rememberMe}
                             />}
                         />
-                        {/*{formik.errors.captcha ? <div style={{color: 'red'}}>{formik.errors.captcha}</div> : null}*/}
                         <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
                     </FormGroup>
                 </FormControl>

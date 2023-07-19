@@ -1,7 +1,7 @@
-import {TResponse} from "../../common/types";
-import {TaskPriorities, TaskStatuses} from "../../common/enums";
+import {TResponse} from "../../../common/types";
+import {TaskPriorities, TaskStatuses} from "../../../common/enums";
 import {UpdateDomainTaskModelType} from "./tasks-reducer";
-import {instance} from "../../common/api/common.api";
+import {instance} from "../../../common/api/common.api";
 
 
 export const tasksAPI = {

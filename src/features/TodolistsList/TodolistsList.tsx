@@ -1,29 +1,32 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from '../../app/store'
-import {tasksThunks, TasksStateType} from './tasks-reducer'
 import { Grid, Paper } from '@mui/material'
 
-import { Todolist } from './Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from '../../common/hooks/';
-import {
-    todolistsThunks,
-    FilterValuesType,
-    TodolistDomainType, todolistsActions
-} from "./todolists-reducer";
+import {useActions} from '../../common/hooks'
+
 import {TaskStatuses} from "../../common/enums";
 import {AddItemForm} from "../../common/components";
-import {AddTaskArgType, RemoveTaskArgType} from "./tasks-api";
+import {FilterValuesType, TodolistDomainType, todolistsActions, todolistsThunks } from './todolists/todolists-reducer'
+import {TasksStateType, tasksThunks } from './tasks/tasks-reducer'
+import {AddTaskArgType, RemoveTaskArgType } from './tasks/tasks-api'
+import { Todolist } from './todolists/Todolist'
 
 type PropsType = {
     demo?: boolean
 }
 
+
+
 export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const {fetchTodolistsTC, removeTodolistTC, changeTodolistTitleTC, addTodolistTC} = useActions(todolistsThunks)
+    const {removeTaskTC, addTaskTC, updateTaskTC} = useActions(tasksThunks)
+
 
     const dispatch = useAppDispatch()
 
@@ -31,45 +34,45 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
         if (demo || !isLoggedIn) {
             return;
         }
-			dispatch(todolistsThunks.fetchTodolistsTC())
-    }, [demo, dispatch, isLoggedIn])
+			fetchTodolistsTC()
+    }, [demo, isLoggedIn])
 
     const removeTask = useCallback( (arg: RemoveTaskArgType) => {
 
-        dispatch(tasksThunks.removeTaskTC(arg))
-    }, [dispatch])
+        removeTaskTC(arg)
+    }, [])
 
     const addTask = useCallback( (task: AddTaskArgType) => {
 
-        dispatch(tasksThunks.addTaskTC(task))
-    }, [dispatch])
+        addTaskTC(task)
+    }, [])
 
     const changeStatus = useCallback( (taskId: string, status: TaskStatuses, todolistId: string) => {
 
-        dispatch(tasksThunks.updateTaskTC({taskId, domainModel: {status}, todolistId}))
-    }, [dispatch])
+        updateTaskTC({taskId, domainModel: {status}, todolistId})
+    }, [])
 
     const changeTaskTitle = useCallback( (taskId: string, title: string, todolistId: string) => {
 
-        dispatch(tasksThunks.updateTaskTC({taskId, domainModel: {title}, todolistId}))
-    }, [dispatch])
+        updateTaskTC({taskId, domainModel: {title}, todolistId})
+    }, [])
 
     const changeFilter = useCallback( (value: FilterValuesType, todolistId: string) => {
         dispatch(todolistsActions.changeTodolistFilterAC({id: todolistId, filter: value}))
-    }, [dispatch])
+    }, [])
 
     const removeTodolist = useCallback( (id: string) => {
-        dispatch(todolistsThunks.removeTodolistTC(id))
-    }, [dispatch])
+        removeTodolistTC(id)
+    }, [])
 
     const changeTodolistTitle = useCallback( (todolistId: string, title: string) => {
 
-        dispatch(todolistsThunks.changeTodolistTitleTC({todolistId, title}))
-    }, [dispatch])
+        changeTodolistTitleTC({todolistId, title})
+    }, [])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(todolistsThunks.addTodolistTC(title))
-    }, [dispatch])
+        addTodolistTC(title)
+    }, [])
 
     if (!isLoggedIn) {
         return <Navigate to={"/login"} />

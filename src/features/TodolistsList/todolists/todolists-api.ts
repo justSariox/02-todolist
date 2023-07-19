@@ -1,5 +1,5 @@
-import {instance} from "../../common/api/common.api";
-import {TResponse} from "../../common/types";
+import {instance} from "../../../common/api/common.api";
+import {TResponse} from "../../../common/types";
 
 export const todolistsAPI = {
     getTodolists() {

@@ -30,9 +30,6 @@ const slice = createSlice({
     }
 })
 
-
-
-
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type InitialStateType = {
     status: RequestStatusType
@@ -40,19 +37,6 @@ export type InitialStateType = {
     isInitialized: boolean
 }
 
-
-
 export const appReducer = slice.reducer
 export const appActions = slice.actions
-// export const appThunks = {initializeAppTC}
-// export const initializeAppTC = () => (dispatch: Dispatch) => {
-//     authAPI.me().then(res => {
-//         if (res.data.resultCode === 0) {
-//             dispatch(authActions.setIsLoggedInAC({isLoggedIn: true}));
-//         } else {
-//
-//         }
-//
-//         dispatch(appActions.setAppInitializedAC({isInitialized: true}));
-//     })
-// }
+

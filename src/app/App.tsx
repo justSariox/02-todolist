@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import './App.css'
 import { TodolistsList } from '../features/TodolistsList/TodolistsList'
-
+import {useActions} from '../common/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from './store'
 import {RequestStatusType } from './app-reducer'
@@ -31,12 +31,14 @@ const App = ({demo = false}: PropsType) => {
 	const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 	const dispatch = useDispatch<any>()
 
+	const {initializeAppTC, logoutTC} = useActions(authThunks)
+
 	useEffect(() => {
-		dispatch(authThunks.initializeAppTC())
+		initializeAppTC()
 	}, [])
 
 	const logoutHandler = useCallback(() => {
-		dispatch(authThunks.logoutTC())
+		logoutTC()
 	}, [])
 
 	if (!isInitialized) {
